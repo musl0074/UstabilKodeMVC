@@ -1,0 +1,27 @@
+﻿@model IEnumerable<UstabilKodeMVC.Models.ProductViewModels.ProductGroup>
+
+@{
+    ViewData["Title"] = "Product Body Statistics";
+}
+
+<h2>Product Body Statistics</h2>
+
+<table>
+    <tr>
+        <th>
+            Products
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @item.ProductCount
+            </td>
+        </tr>
+    }
+</table>
