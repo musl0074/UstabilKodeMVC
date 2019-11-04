@@ -12,26 +12,15 @@ namespace UstabilkodeApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : Controller
     {
         private readonly UstabilkodeContext _context;
 
         public ProductController(UstabilkodeContext context)
         {
             _context = context;
-
-            if (_context.Products.Count() == 0)
-            {
-                // Create a new TodoItem if collection is empty,
-                // which means you can't delete all TodoItems.
-                _context.Products.Add(new Product { Name = "Item1", Details = "blala", Price = 500 });
-                _context.Products.Add(new Product { Name = "Item1", Details = "blala", Price = 500 });
-                _context.Products.Add(new Product { Name = "Item1", Details = "blala", Price = 500 });
-                _context.Products.Add(new Product { Name = "Item1", Details = "blala", Price = 500 });
-
-                _context.SaveChanges();
-            }
         }
+
 
         // GET: api/Product
         [HttpGet]
@@ -61,14 +50,14 @@ namespace UstabilkodeApi.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.ID }, product);
         }
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            if (id != product.Id)
+            if (id != product.ID)
             {
                 return BadRequest();
             }

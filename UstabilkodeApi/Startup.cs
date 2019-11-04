@@ -29,7 +29,8 @@ namespace UstabilkodeApi
         {
             services.AddDbContext<UstabilkodeContext>(opt =>
             {
-                opt.UseInMemoryDatabase("UstabilKodeDb");
+                //opt.UseInMemoryDatabase("UstabilKodeDb");
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
