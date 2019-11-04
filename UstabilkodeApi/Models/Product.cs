@@ -11,5 +11,18 @@ namespace UstabilkodeApi.Models
         public string Name { get; set; }
         public string Details { get; set; }
         public double Price { get; set; }
+
+
+        public Product()
+        {
+
+        }
+
+        public Product(string name, string details, double price)
+        {
+            Name = name;
+            Details = details;
+            Price = price;
+        }
     }
 }
