@@ -37,17 +37,17 @@ namespace UstabilKodeMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<ActionResult> About()
-        {
-            IQueryable<ProductGroup> data =
-                from product in _context.Products
-                group product by product.ProductName into productGroup
-                select new ProductGroup()
-                {
-                    ProductName = productGroup.Key,
-                    ProductCount = productGroup.Count()
-                };
-            return View(await data.AsNoTracking().ToListAsync());
-        }
+        //public async Task<ActionResult> About()
+        //{
+        //    IQueryable<ProductGroup> data =
+        //        from product in _context.Products
+        //        group product by product.ProductName into productGroup
+        //        select new ProductGroup()
+        //        {
+        //            ProductName = productGroup.Key,
+        //            ProductCount = productGroup.Count()
+        //        };
+        //    return View(await data.AsNoTracking().ToListAsync());
+        //}
     }
 }
