@@ -7,8 +7,14 @@ namespace UstabilkodeApi.Data
 {
     public class Comment
     {
+        // Keys
         public int ID { get; set; }
+        public int PostID { get; set; }
 
+        // Navigation properties
+        public Post Post { get; set; }
+
+        // Data-Properties
         public string Content { get; set; }
     }
 }
