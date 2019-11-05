@@ -58,17 +58,87 @@ namespace UstabilkodeApi.Controllers
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Product>> PutProduct(int? id, Product product, byte[] rowVersion)
         {
-            if (id != product.ID)
+            if (id == null)
             {
-                return BadRequest();
+                return NotFound();
+            }
+            //(i => i.Administrator).
+
+            var productToUpdate = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (productToUpdate == null)
+            {
+                Product deletedProduct = new Product();
+                await TryUpdateModelAsync(deletedProduct);
+                ModelState.AddModelError(string.Empty,
+                    "Unable to save changes. The product was deleted by another user.");
+                //ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", deletedDepartment.InstructorID);
+                return View(deletedProduct);
             }
 
-            _context.Entry(product).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.Entry(productToUpdate).Property("RowVersion").OriginalValue = rowVersion;
 
-            return NoContent();
+            if (await TryUpdateModelAsync<Product>(
+                productToUpdate,
+                "",
+                s => s.Name, s => s.Details, s => s.Price))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(GetProducts));
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Product)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
+                    {
+                        ModelState.AddModelError(string.Empty,
+                            "Unable to save changes. The department was deleted by another user.");
+                    }
+                    else
+                    {
+                        var databaseValues = (Product)databaseEntry.ToObject();
+
+                        if (databaseValues.Name != clientValues.Name)
+                        {
+                            ModelState.AddModelError("Name", $"Current value: {databaseValues.Name}");
+                        }
+                        if (databaseValues.Details != clientValues.Details)
+                        {
+                            ModelState.AddModelError("Budget", $"Current value: {databaseValues.Details:c}");
+                        }
+                        if (databaseValues.Price != clientValues.Price)
+                        {
+                            ModelState.AddModelError("StartDate", $"Current value: {databaseValues.Price:d}");
+                        }
+
+                        ModelState.AddModelError(string.Empty, "The record you attempted to edit "
+                                + "was modified by another user after you got the original value. The "
+                                + "edit operation was canceled and the current values in the database "
+                                + "have been displayed. If you still want to edit this record, click "
+                                + "the Save button again. Otherwise click the Back to List hyperlink.");
+                        productToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
+                    }
+                }
+            }
+            //ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", departmentToUpdate.InstructorID);
+            return View(productToUpdate);
+            //if (id != product.ID)
+            //{
+            //    return BadRequest();
+            //}
+
+            //_context.Entry(product).State = EntityState.Modified;
+            //await _context.SaveChangesAsync();
+
+            //return NoContent();
         }
 
         // DELETE: api/Product/5
