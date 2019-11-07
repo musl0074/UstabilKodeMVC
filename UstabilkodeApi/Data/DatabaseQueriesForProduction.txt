@@ -1,0 +1,6 @@
+﻿// DROP TABLES - Run multiple times
+***********************
+DROP TABLE dbo.Post
+DROP TABLE dbo.Comment
+DROP TABLE dbo.Products
+***********************

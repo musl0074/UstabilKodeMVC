@@ -35,6 +35,27 @@ namespace UstabilkodeApi.Data
             context.SaveChanges();
 
 
+            List<Post> posts = new List<Post>();
+            List<Comment> comments = new List<Comment>();
+            Post p1 = new Post() { Title = "Post1", Content = "Post1" };
+            Comment c1 = new Comment() { Post = p1, Content = "Comment1" };
+            posts.Add(p1);
+            comments.Add(c1);
+
+            Post p2 = new Post() { Title = "Post2", Content = "Post2" };
+            Comment c2 = new Comment() { Post = p2, Content = "Comment2" };
+            posts.Add(p2);
+            comments.Add(c2);
+
+            Post p3 = new Post() { Title = "Post3", Content = "Post3" };
+            Comment c3 = new Comment() { Post = p3, Content = "Comment3" };
+            posts.Add(p3);
+            comments.Add(c3);
+
+            posts.ForEach((p) => context.Post.Add(p));
+            comments.ForEach((c) => context.Comment.Add(c));
+
+            context.SaveChanges();
         }
     }
 }

@@ -17,14 +17,17 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void GetAll()
         {
-            var products = UstabilkodeAPI.GetProducts().Result;
+            var products = ProductEndpoints.GetProducts().Result;
 
             Assert.IsTrue(products != null);
         }
         [Test]
         public void Get()
         {
-            var product = UstabilkodeAPI.GetProduct(1).Result;
+            int validID = GetValidID();
+
+
+            var product = ProductEndpoints.GetProduct(validID).Result;
 
             Assert.IsTrue(product != null);
         }
@@ -33,47 +36,74 @@ namespace NUnitTestProject1.Ustabilkode_API
         {
             Product product = new Product() { Name = "Test", Details = "Test", Price = 0 };
 
-            var response = UstabilkodeAPI.CreateProduct(product.Name, product.Details, product.Price).Result;
+            var response = ProductEndpoints.CreateProduct(product.Name, product.Details, product.Price).Result;
 
             Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.Created);
         }
         [Test]
         public void Put()
         {
-            var productFirstGet = UstabilkodeAPI.GetProduct(1).Result;
+            int validID = GetValidID();
 
-            var response = UstabilkodeAPI.UpdateProduct(productFirstGet.ID, productFirstGet.Name, "test", productFirstGet.Price, productFirstGet.RowVersion).Result;
 
-            var productSecondGet = UstabilkodeAPI.GetProduct(1).Result;
+            var productFirstGet = ProductEndpoints.GetProduct(validID).Result;
+
+            var response = ProductEndpoints.UpdateProduct(productFirstGet.ID, productFirstGet.Name, "test", productFirstGet.Price, productFirstGet.RowVersion).Result;
+
+            var productSecondGet = ProductEndpoints.GetProduct(validID).Result;
             string secondGetDetails = productSecondGet.Details;
 
-            var response2 = UstabilkodeAPI.UpdateProduct(productSecondGet.ID, productSecondGet.Name, "default", productSecondGet.Price, productSecondGet.RowVersion).Result;
+            var response2 = ProductEndpoints.UpdateProduct(productSecondGet.ID, productSecondGet.Name, "default", productSecondGet.Price, productSecondGet.RowVersion).Result;
 
-            Assert.IsTrue(secondGetDetails == "test");
+            Assert.IsTrue(productSecondGet.Details == "test");
         }
         [Test]
         public void Delete()
         {
-            var response = UstabilkodeAPI.DeleteProduct(14).Result;
+            int validID = GetValidID();
+
+            var response = ProductEndpoints.DeleteProduct(validID).Result;
 
             Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == System.Net.HttpStatusCode.NotFound);
         }
         [Test]
         public void Concurrency()
         {
-            var productFirstGet = UstabilkodeAPI.GetProduct(1).Result;
+            int validID = GetValidID();
 
-            var response1 = UstabilkodeAPI.UpdateProduct(productFirstGet.ID, productFirstGet.Name, productFirstGet.Details, 100, productFirstGet.RowVersion).Result;
+
+            var productFirstGet = ProductEndpoints.GetProduct(validID).Result;
+
+            var response1 = ProductEndpoints.UpdateProduct(productFirstGet.ID, productFirstGet.Name, productFirstGet.Details, 100, productFirstGet.RowVersion).Result;
             
-            var response2 = UstabilkodeAPI.UpdateProduct(productFirstGet.ID, productFirstGet.Name, productFirstGet.Details, 200, productFirstGet.RowVersion).Result;
+            var response2 = ProductEndpoints.UpdateProduct(productFirstGet.ID, productFirstGet.Name, productFirstGet.Details, 200, productFirstGet.RowVersion).Result;
 
             // Set value with proper rowVersion, so its ready for another test
-            var productSecondGet = UstabilkodeAPI.GetProduct(1).Result;
-            var response3 = UstabilkodeAPI.UpdateProduct(productSecondGet.ID, productSecondGet.Name, productSecondGet.Details, 200, productSecondGet.RowVersion).Result;
+            var productSecondGet = ProductEndpoints.GetProduct(validID).Result;
+            var response3 = ProductEndpoints.UpdateProduct(productSecondGet.ID, productSecondGet.Name, productSecondGet.Details, 200, productSecondGet.RowVersion).Result;
 
 
             Assert.IsTrue(response2.StatusCode == System.Net.HttpStatusCode.Conflict);
         }
         
+
+
+        private int GetValidID()
+        {
+            int validID = 0;
+
+            for (int i = 1; i < 100; i++)
+            {
+                Product product = ProductEndpoints.GetProduct(i).Result;
+
+                if (product != null && product.ID != 0)
+                {
+                    validID = product.ID;
+                    break;
+                }
+            }
+
+            return validID;
+        }
     }
 }

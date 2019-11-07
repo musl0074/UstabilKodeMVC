@@ -14,7 +14,7 @@ namespace UstabilkodeApi.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        private readonly UstabilkodeContext _context;
+        private UstabilkodeContext _context;
 
         public CommentController(UstabilkodeContext context)
         {

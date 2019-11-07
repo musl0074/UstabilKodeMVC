@@ -33,6 +33,7 @@ namespace UstabilkodeApi
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

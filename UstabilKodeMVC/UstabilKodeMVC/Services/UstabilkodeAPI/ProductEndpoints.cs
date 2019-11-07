@@ -13,16 +13,13 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
 {
     public static class ProductEndpoints
     {
-        private const string apiurl = "https://ustabilkode-api.azurewebsites.net/api";
-        private static HttpClient client = new HttpClient();
-
         public async static Task<List<Product>> GetProducts()
         {
-            string getProductsUrl = apiurl + "/Product";
+            string getProductsUrl = APISettings.APIUrl + "/Product";
 
             
-            HttpResponseMessage response =await client.GetAsync(getProductsUrl);
-            string productsString=await response.Content.ReadAsStringAsync();
+            HttpResponseMessage response = await APISettings.Client.GetAsync(getProductsUrl);
+            string productsString = await response.Content.ReadAsStringAsync();
 
 
             List<Product> products = JsonConvert.DeserializeObject<List<Product>>(productsString);
@@ -32,10 +29,10 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
 
         public async static Task<Product> GetProduct(int id)
         {
-            string getProductUrl = apiurl + "/Product/" + id;
+            string getProductUrl = APISettings.APIUrl + "/Product/" + id;
 
-            
-            string productString = await client.GetStringAsync(getProductUrl);
+            HttpResponseMessage response = await APISettings.Client.GetAsync(getProductUrl);
+            string productString = await response.Content.ReadAsStringAsync();
 
             Product product = JsonConvert.DeserializeObject<Product>(productString);
 
@@ -44,26 +41,26 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
 
         public async static Task<HttpResponseMessage> CreateProduct(string name, string details, double price)
         {
-            string postCreateProductUrl = apiurl + "/Product";
+            string postCreateProductUrl = APISettings.APIUrl + "/Product";
             
-
             Product product = new Product()
             {
                 Name = name,
                 Details = details,
                 Price = price
             };
+
             string json = JsonConvert.SerializeObject(product);
-            StringContent message = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent body = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var response = await APISettings.Client.PostAsync(postCreateProductUrl, body);
 
-           return await client.PostAsync(postCreateProductUrl,message);
-
+            return response;
         }
 
         public async static Task<HttpResponseMessage> UpdateProduct(int id,string name,string details,double price, byte[] rowVersion)
         {
-            string postUpdateProductUrl = apiurl + "/Product/Edit";
+            string postUpdateProductUrl = APISettings.APIUrl + "/Product/Edit";
 
             Product product = new Product()
             {
@@ -77,22 +74,16 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             string json = JsonConvert.SerializeObject(product);
             StringContent message = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return await client.PutAsync(postUpdateProductUrl, message);
+            return await APISettings.Client.PutAsync(postUpdateProductUrl, message);
         }
 
         public async static Task<HttpResponseMessage> DeleteProduct(int id)
         {
-            string deleteProductURL = apiurl + "/Product/" + id;
+            string deleteProductURL = APISettings.APIUrl + "/Product/" + id;
 
-            Product product = new Product
-            {
-                ID = id
-            };
+            HttpResponseMessage response = await APISettings.Client.DeleteAsync(deleteProductURL);
 
-            string json = JsonConvert.SerializeObject(product);
-            StringContent message = new StringContent(json, Encoding.UTF8, "application/json");
-
-            return await client.DeleteAsync(deleteProductURL);
+            return response;
         }
     }
 }

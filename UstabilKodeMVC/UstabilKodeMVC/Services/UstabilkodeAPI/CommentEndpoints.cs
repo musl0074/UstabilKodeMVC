@@ -7,5 +7,6 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
 {
     public class CommentEndpoints
     {
+
     }
 }
