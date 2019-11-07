@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,5 +17,8 @@ namespace UstabilkodeApi.Data
 
         // Data-Properties
         public string Content { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

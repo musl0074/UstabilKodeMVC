@@ -9,14 +9,13 @@ using UstabilKodeMVC.Models;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace UstabilKodeMVC.Services
+namespace UstabilKodeMVC.Services.UstabilkodeAPI
 {
-    public static class UstabilkodeAPI
+    public static class ProductEndpoints
     {
         private const string apiurl = "https://ustabilkode-api.azurewebsites.net/api";
         private static HttpClient client = new HttpClient();
 
-        #region Products
         public async static Task<List<Product>> GetProducts()
         {
             string getProductsUrl = apiurl + "/Product";
@@ -95,60 +94,5 @@ namespace UstabilKodeMVC.Services
 
             return await client.DeleteAsync(deleteProductURL);
         }
-        #endregion
-
-        #region Posts
-        public static void GetPosts()
-        {
-
-        }
-
-        public static void GetPost(int id)
-        {
-
-        }
-
-        public static void CreatePost()
-        {
-
-        }
-
-        public static void UpdatePost()
-        {
-
-        }
-
-        public static void DeletePost()
-        {
-
-        }
-        #endregion
-
-        #region Comments
-        public static void GetComments()
-        {
-
-        }
-
-        public static void GetComment(int id)
-        {
-
-        }
-
-        public static void CreateComment()
-        {
-
-        }
-
-        public static void UpdateComment()
-        {
-
-        }
-
-        public static void DeleteComment()
-        {
-
-        }
-        #endregion
     }
 }

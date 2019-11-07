@@ -18,8 +18,8 @@ namespace UstabilKodeMVC.Models
         [JsonProperty("price")]
         public double Price { get; set; }
         [JsonProperty("rowVersion")]
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+        
 
+        public byte[] RowVersion { get; set; }
     }
 }

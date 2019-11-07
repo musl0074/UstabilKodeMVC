@@ -25,14 +25,14 @@ namespace UstabilkodeApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPost()
         {
-            return await _context.Post.ToListAsync();
+            return await _context.Post.AsNoTracking().ToListAsync();
         }
 
         // GET: api/Post/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(int id)
         {
-            var post = await _context.Post.FindAsync(id);
+            var post = await _context.Post.AsNoTracking().FirstAsync((p) => p.ID == id);
 
             if (post == null)
             {
@@ -43,15 +43,18 @@ namespace UstabilkodeApi.Controllers
         }
 
         // PUT: api/Post/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPost(int id, Post post)
+        [HttpPut]
+        public async Task<IActionResult> PutPost(Post post)
         {
-            if (id != post.ID)
+            if (!PostExists(post.ID))
+                return NotFound();
+             
+            try
             {
-                return BadRequest();
+                _context.Entry(post).State = EntityState.Modified;
             }
+            catch(Exception e) { }
 
-            _context.Entry(post).State = EntityState.Modified;
 
             try
             {
@@ -59,13 +62,13 @@ namespace UstabilkodeApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostExists(id))
+                if (!PostExists(post.ID))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    return Conflict();
                 }
             }
 
