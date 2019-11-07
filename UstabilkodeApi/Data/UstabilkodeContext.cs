@@ -19,5 +19,8 @@ namespace UstabilkodeApi.Models
         public DbSet<UstabilkodeApi.Data.Post> Post { get; set; }
 
         public DbSet<UstabilkodeApi.Data.Comment> Comment { get; set; }
+
+
+        
     }
 }
