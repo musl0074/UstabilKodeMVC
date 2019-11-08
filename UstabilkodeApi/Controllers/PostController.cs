@@ -32,7 +32,7 @@ namespace UstabilkodeApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(int id)
         {
-            var post = await _context.Post.AsNoTracking().FirstAsync((p) => p.ID == id);
+            var post = await _context.Post.AsNoTracking().Where((p) => p.ID == id).Include((p) => p.Comments).FirstOrDefaultAsync();
 
             if (post == null)
             {

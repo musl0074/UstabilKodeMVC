@@ -12,7 +12,7 @@ namespace UstabilkodeApi.Data
         public int ID { get; set; }
 
         // Navigation properties
-        public ICollection<Comment> Comments { get; set; }
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
         // Data-Properties
         public string Title { get; set; }

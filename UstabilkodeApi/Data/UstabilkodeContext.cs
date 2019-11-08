@@ -21,6 +21,23 @@ namespace UstabilkodeApi.Models
         public DbSet<UstabilkodeApi.Data.Comment> Comment { get; set; }
 
 
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Post>()
+                .HasMany((p) => p.Comments)
+                .WithOne((c) => c.Post)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne((c) => c.Post)
+                .WithMany((p) => p.Comments)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // Respect identity columns
+            modelBuilder.Entity<Post>().Property((p) => p.ID).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Comment>().Property((c) => c.ID).ValueGeneratedOnAdd();
+
+        }
     }
 }

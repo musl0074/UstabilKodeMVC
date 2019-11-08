@@ -41,13 +41,11 @@ namespace NUnitTestProject1.Ustabilkode_API
             int postId = GetValidPostID();
             Post post = PostEndpoints.GetPost(postId).Result;
             Comment comment = new Comment() { Content = "Test", Post = post };
-            post.Comments.Add(comment);
 
-            var responseUpdatePost = PostEndpoints.UpdatePost(post.ID, post.Title, post.Content, post.Comments, post.RowVersion).Result;
+            var responseCreateComment = CommentEndpoints.CreateComment(comment.Content, comment.Post);
 
-            var responseCreateComment = CommentEndpoints.CreateComment(comment.Content, comment.Post).Result;
+            //var responseUpdatePost = PostEndpoints.UpdatePost(post.ID, post.Title, post.Content, post.Comments, post.RowVersion).Result;
 
-            Assert.IsTrue(responseCreateComment.StatusCode == System.Net.HttpStatusCode.Created);
         }
 
         [Test]

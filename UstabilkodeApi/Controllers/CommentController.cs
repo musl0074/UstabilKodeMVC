@@ -80,7 +80,12 @@ namespace UstabilkodeApi.Controllers
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
             _context.Comment.Add(comment);
-            await _context.SaveChangesAsync();
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e) { }
 
             return CreatedAtAction("GetComment", new { id = comment.ID }, comment);
         }
