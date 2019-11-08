@@ -24,7 +24,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Get()
         {
-            int validID = GetValidID();
+            int validID = GetValidProductID();
 
 
             var product = ProductEndpoints.GetProduct(validID).Result;
@@ -43,7 +43,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Put()
         {
-            int validID = GetValidID();
+            int validID = GetValidProductID();
 
 
             var productFirstGet = ProductEndpoints.GetProduct(validID).Result;
@@ -60,7 +60,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Delete()
         {
-            int validID = GetValidID();
+            int validID = GetValidProductID();
 
             var response = ProductEndpoints.DeleteProduct(validID).Result;
 
@@ -69,7 +69,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Concurrency()
         {
-            int validID = GetValidID();
+            int validID = GetValidProductID();
 
 
             var productFirstGet = ProductEndpoints.GetProduct(validID).Result;
@@ -88,7 +88,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         
 
 
-        private int GetValidID()
+        private int GetValidProductID()
         {
             int validID = 0;
 

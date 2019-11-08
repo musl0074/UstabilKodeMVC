@@ -12,7 +12,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Concurrency()
         {
-            int validID = GetValidID();
+            int validID = GetValidPostID();
 
             Post post = PostEndpoints.GetPost(validID).Result;
 
@@ -30,7 +30,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Delete()
         {
-            int validID = GetValidID();
+            int validID = GetValidPostID();
 
 
             var response = PostEndpoints.DeletePost(validID).Result;
@@ -42,7 +42,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Get()
         {
-            int validID = GetValidID();
+            int validID = GetValidPostID();
 
             var post = PostEndpoints.GetPost(validID).Result;
 
@@ -68,7 +68,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Put()
         {
-            int validID = GetValidID();
+            int validID = GetValidPostID();
 
             var postToUpdate = PostEndpoints.GetPost(validID).Result;
 
@@ -87,7 +87,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         }
 
 
-        private int GetValidID()
+        private int GetValidPostID()
         {
             int validID = 0;
 
