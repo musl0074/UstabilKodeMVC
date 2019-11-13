@@ -182,7 +182,7 @@ namespace UstabilkodeApi.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
     }
 }

@@ -18,13 +18,19 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Delete()
         {
-            throw new NotImplementedException();
+            Comment comment = GetValidComment();
+
+            var response = CommentEndpoints.DeleteComment(comment.ID).Result;
+
+            Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
         [Test]
         public void Get()
         {
-            throw new NotImplementedException();
+            Comment comment = GetValidComment();
+
+            Assert.IsTrue(comment != null);
         }
 
         [Test]
@@ -39,13 +45,13 @@ namespace NUnitTestProject1.Ustabilkode_API
         public void Post()
         {
             int postId = GetValidPostID();
-            Post post = PostEndpoints.GetPost(postId).Result;
-            Comment comment = new Comment() { Content = "Test", Post = post };
 
-            var responseCreateComment = CommentEndpoints.CreateComment(comment.Content, comment.Post);
+            Comment comment = new Comment() { Content = "Test" };
 
-            //var responseUpdatePost = PostEndpoints.UpdatePost(post.ID, post.Title, post.Content, post.Comments, post.RowVersion).Result;
+            var response = CommentEndpoints.CreateComment(postId, comment.Content).Result;
 
+
+            Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.Created);
         }
 
         [Test]
@@ -55,6 +61,21 @@ namespace NUnitTestProject1.Ustabilkode_API
         }
 
 
+
+        private Comment GetValidComment()
+        {
+            for (int i = 1; i < 100; i++)
+            {
+                Comment comment = CommentEndpoints.GetComment(i).Result;
+
+                if(comment != null && comment.ID != 0)
+                {
+                    return comment;
+                }
+            }
+
+            return null;
+        }
 
         private int GetValidPostID()
         {

@@ -76,16 +76,18 @@ namespace UstabilkodeApi.Controllers
         }
 
         // POST: api/Comment
-        [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment(Comment comment)
+        [HttpPost("{id}")]
+        public async Task<ActionResult<Comment>> PostComment(int id, Comment comment)
         {
-            _context.Comment.Add(comment);
-            
+            var post = _context.Post.Where((p) => p.ID == id).FirstOrDefault();
+
+            post.Comments.Add(comment);
+
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch(Exception e) { }
+            catch(Exception e) { return StatusCode(304); } // Not modified
 
             return CreatedAtAction("GetComment", new { id = comment.ID }, comment);
         }
@@ -103,7 +105,8 @@ namespace UstabilkodeApi.Controllers
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
 
-            return comment;
+
+            return Ok();
         }
 
         private bool CommentExists(int id)
