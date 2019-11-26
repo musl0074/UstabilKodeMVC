@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using UstabilkodeApi.Data;
 using UstabilkodeApi.Models;
 
@@ -12,7 +13,7 @@ namespace UstabilkodeApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostController : ControllerBase
+    public class PostController : Controller
     {
         private UstabilkodeContext _context;
 
@@ -32,7 +33,8 @@ namespace UstabilkodeApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(int id)
         {
-            var post = await _context.Post.AsNoTracking().FirstAsync((p) => p.ID == id);
+            var post = await _context.Post.AsNoTracking().Where((p) => p.ID == id).Include((p) => p.Comments).FirstOrDefaultAsync();
+
 
             if (post == null)
             {
@@ -98,7 +100,7 @@ namespace UstabilkodeApi.Controllers
             _context.Post.Remove(post);
             await _context.SaveChangesAsync();
 
-            return post;
+            return Ok();
         }
 
         private bool PostExists(int id)

@@ -53,7 +53,7 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return response;
         }
 
-        public static async Task<HttpResponseMessage> UpdatePost(int id, string title, string content, ICollection<Comment> comments, byte[] rowVersion)
+        public static async Task<HttpResponseMessage> UpdatePost(int id, string title, string content, List<Comment> comments, byte[] rowVersion)
         {
             string updatePostUrl = APISettings.APIUrl + "/post";
 
@@ -66,7 +66,7 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
                 RowVersion = rowVersion
             };
 
-            string json = JsonConvert.SerializeObject(post);
+            string json = JsonConvert.SerializeObject(post, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
             StringContent body = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await APISettings.Client.PutAsync(updatePostUrl, body);

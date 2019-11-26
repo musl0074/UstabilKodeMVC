@@ -64,7 +64,7 @@ namespace NUnitTestProject1.Ustabilkode_API
 
             var response = ProductEndpoints.DeleteProduct(validID).Result;
 
-            Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == System.Net.HttpStatusCode.NotFound);
+            Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.OK);
         }
         [Test]
         public void Concurrency()

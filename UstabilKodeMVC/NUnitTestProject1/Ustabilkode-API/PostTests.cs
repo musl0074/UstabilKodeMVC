@@ -36,7 +36,7 @@ namespace NUnitTestProject1.Ustabilkode_API
             var response = PostEndpoints.DeletePost(validID).Result;
 
 
-            Assert.IsTrue(response.StatusCode != System.Net.HttpStatusCode.NotFound);
+            Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
         [Test]

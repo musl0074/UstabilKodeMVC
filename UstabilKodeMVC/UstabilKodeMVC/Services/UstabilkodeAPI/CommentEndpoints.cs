@@ -35,11 +35,11 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return comments;
         }
 
-        public static async Task<HttpResponseMessage> CreateComment(string content, Post post)
+        public static async Task<HttpResponseMessage> CreateComment(int id, string content)
         {
-            string createUrl = APISettings.APIUrl + "/Comment";
+            string createUrl = APISettings.APIUrl + "/Comment/" + id;
             
-            Comment comment = new Comment() { Content = content, Post = post };
+            Comment comment = new Comment() { Content = content };
             var json = JsonConvert.SerializeObject(comment);
             var body = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -62,7 +62,7 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
 
         public static async Task<HttpResponseMessage> DeleteComment(int id)
         {
-            string deleteUrl = APISettings.APIUrl + "/Comment";
+            string deleteUrl = APISettings.APIUrl + "/Comment/" + id;
 
             var response = await APISettings.Client.DeleteAsync(deleteUrl);
 
