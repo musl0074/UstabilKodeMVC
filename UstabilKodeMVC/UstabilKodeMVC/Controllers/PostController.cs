@@ -41,8 +41,17 @@ namespace UstabilKodeMVC.Controllers
         {
             var post = await PostEndpoints.GetPost(id);
             var username = _userManager.Users.Where((user) => user.Id == post.UserID).FirstOrDefault().UserName;
+            var currentUser = await _userManager.GetUserAsync(User);
 
-            return View(new PostUsername() { Post = post, Username = username });
+            return View(new PostUsername() { Post = post, Username = username, CurrentUser = currentUser });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await PostEndpoints.DeletePost(id);
+
+            return RedirectToAction("Index", "Forum");
         }
     }
 }

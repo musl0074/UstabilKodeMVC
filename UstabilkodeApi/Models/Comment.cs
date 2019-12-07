@@ -17,6 +17,7 @@ namespace UstabilkodeApi.Data
 
         // Data-Properties
         public string Content { get; set; }
+        public string UserID { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

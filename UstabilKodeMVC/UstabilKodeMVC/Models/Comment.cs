@@ -12,6 +12,7 @@ namespace UstabilKodeMVC.Models
         public int PostID { get; set; }
         public Post Post { get; set; }
         public string Content { get; set; }
+        public string UserID { get; set; }
         public byte[] RowVersion { get; set; }
     }
 }
