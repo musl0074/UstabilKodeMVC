@@ -60,7 +60,7 @@ namespace NUnitTestProject1.Ustabilkode_API
         [Test]
         public void Post()
         {
-            var response = PostEndpoints.CreatePost("UnitTest", "UnitTest").Result;
+            var response = PostEndpoints.CreatePost("admin", "UnitTest", "UnitTest").Result;
 
             Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.Created);
         }

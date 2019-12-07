@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UstabilKodeMVC.Data;
@@ -13,13 +14,6 @@ namespace UstabilKodeMVC.Controllers
 {
     public class HomeController : Controller
     {
-
-        private readonly DatabaseContext _context;
-
-        public HomeController(DatabaseContext context)
-        {
-            _context = context;
-        }
 
         public IActionResult Index()
         {

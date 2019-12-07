@@ -9,6 +9,7 @@ namespace UstabilKodeMVC.Models
     public class Post
     {
         public int ID { get; set; }
+        public string UserID { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public string Title { get; set; }
         public string Content { get; set; }

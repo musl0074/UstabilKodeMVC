@@ -35,12 +35,13 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return post;
         }
 
-        public static async Task<HttpResponseMessage> CreatePost(string title, string content)
+        public static async Task<HttpResponseMessage> CreatePost(string userId, string title, string content)
         {
             string createPostUrl = APISettings.APIUrl + "/post";
 
             Post post = new Post()
             {
+                UserID = userId,
                 Title = title,
                 Content = content
             };

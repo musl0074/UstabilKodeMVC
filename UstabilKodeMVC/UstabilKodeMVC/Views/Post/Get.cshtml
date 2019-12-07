@@ -1,0 +1,27 @@
+﻿@model UstabilKodeMVC.Models.ForumViewModels.PostUsername
+
+@{ 
+    if(Model != null)
+    {
+        <div class="post-wrapper">
+            <h2>@Model.Post.Title</h2>
+            <textarea class="form-control" rows="5" disabled>@Model.Post.Content</textarea>
+            <p>Skrevet af: <strong>@Model.Username</strong></p>
+        </div>
+
+        <div class="mt-5"><h3>Kommentarer</h3></div>
+
+        @foreach (var comment in Model.Post.Comments)
+        {
+            <div class="row">
+                <div class="col-3">
+                    
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1>Error</h1>
+    }
+}

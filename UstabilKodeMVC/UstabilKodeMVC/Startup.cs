@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UstabilKodeMVC.Data;
+using UstabilKodeMVC.Services.DefaultAdminMiddleware;
+using UstabilKodeMVC.Services.UstabilkodeAPI;
 
 namespace UstabilKodeMVC
 {
@@ -43,9 +45,13 @@ namespace UstabilKodeMVC
                 options.Password.RequireDigit = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 5;
+              
             })
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<DatabaseContext>();
+
+            
 
             services.AddMvc()
                 .AddJsonOptions((options) => {
@@ -57,9 +63,14 @@ namespace UstabilKodeMVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            env.EnvironmentName = "Development";
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                APISettings.APIUrl = "http://localhost:54321/api"; // Use local api in development
+
+                app.UseDefaultAdmin();
             }
             else
             {

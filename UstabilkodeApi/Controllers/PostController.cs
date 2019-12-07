@@ -36,6 +36,7 @@ namespace UstabilkodeApi.Controllers
             var post = await _context.Post.AsNoTracking().Where((p) => p.ID == id).Include((p) => p.Comments).FirstOrDefaultAsync();
 
 
+
             if (post == null)
             {
                 return NotFound();

@@ -40,6 +40,9 @@ namespace UstabilKodeMVC.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
+            public string Username { get; set; }
+
+            [Required]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -60,10 +63,9 @@ namespace UstabilKodeMVC.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
-
             Input = new InputModel
             {
+                Username = userName,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
@@ -84,6 +86,17 @@ namespace UstabilKodeMVC.Areas.Identity.Pages.Account.Manage
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var username = await _userManager.GetUserNameAsync(user);
+            if (Input.Username != username)
+            {
+                var setUsernameResult = await _userManager.SetUserNameAsync(user, Input.Username);
+                if (!setUsernameResult.Succeeded)
+                {
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    throw new InvalidOperationException($"Unexpected error occurred setting username for user with ID '{userId}'.");
+                }
             }
 
             var email = await _userManager.GetEmailAsync(user);

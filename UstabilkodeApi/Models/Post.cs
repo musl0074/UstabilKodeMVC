@@ -15,6 +15,7 @@ namespace UstabilkodeApi.Data
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
         // Data-Properties
+        public string UserID { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
 
