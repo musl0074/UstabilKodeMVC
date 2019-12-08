@@ -70,7 +70,7 @@ namespace UstabilKodeMVC
                 app.UseDeveloperExceptionPage();
                 APISettings.APIUrl = "http://localhost:54321/api"; // Use local api in development
 
-                app.UseDefaultAdmin();
+                app.UseDefaultAdmin(); // Create admin account on development, if it doesnt already exist
             }
             else
             {

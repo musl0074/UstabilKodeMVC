@@ -35,11 +35,11 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return comments;
         }
 
-        public static async Task<HttpResponseMessage> CreateComment(int id, string content)
+        public static async Task<HttpResponseMessage> CreateComment(int id, string userId, string content)
         {
             string createUrl = APISettings.APIUrl + "/Comment/" + id;
             
-            Comment comment = new Comment() { Content = content };
+            Comment comment = new Comment() { UserID = userId, Content = content };
             var json = JsonConvert.SerializeObject(comment);
             var body = new StringContent(json, Encoding.UTF8, "application/json");
 

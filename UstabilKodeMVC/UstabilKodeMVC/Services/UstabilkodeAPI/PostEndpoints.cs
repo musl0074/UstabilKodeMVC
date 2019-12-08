@@ -54,18 +54,9 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return response;
         }
 
-        public static async Task<HttpResponseMessage> UpdatePost(int id, string title, string content, List<Comment> comments, byte[] rowVersion)
+        public static async Task<HttpResponseMessage> UpdatePost(Post post)
         {
             string updatePostUrl = APISettings.APIUrl + "/post";
-
-            Post post = new Post()
-            {
-                ID = id,
-                Title = title,
-                Content = content,
-                Comments = comments,
-                RowVersion = rowVersion
-            };
 
             string json = JsonConvert.SerializeObject(post, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
             StringContent body = new StringContent(json, Encoding.UTF8, "application/json");

@@ -11,5 +11,8 @@ namespace UstabilKodeMVC.Models.ForumViewModels
         public Post Post { get; set; }
         public string Username;
         public IdentityUser CurrentUser { get; set; }
+
+        public List<string> Username_comments { get; set; }
+
     }
 }

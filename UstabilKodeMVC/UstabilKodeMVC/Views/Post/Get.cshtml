@@ -8,22 +8,34 @@
         <textarea class="form-control" rows="5" disabled>@Model.Post.Content</textarea>
         <p>Skrevet af: <strong>@Model.Username</strong></p>
 
-        @{ 
-            if(Model.Post.UserID == Model.CurrentUser.Id)
+        @{
+            if (Model.Post.UserID == Model.CurrentUser.Id)
             {
                 <a class="btn btn-outline-danger mt-2" asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.ID">Slet opslag</a>
+                <a class="btn btn-outline-danger mt-2" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Post.ID">Rediger</a>
             }
         }
 
         <div class="mt-5"><h3>Kommentarer</h3></div>
 
-        @foreach (var comment in Model.Post.Comments)
-        {
-            <div class="row">
-                <div class="col-3">
+        <form asp-controller="Comment" asp-action="Create" method="post">
+            <textarea class="form-control" rows="2" name="content"></textarea>
+            <input type="hidden" name="postId" value="@Model.Post.ID"/>
+            <button class="btn btn-outline-primary mt-2" type="submit">Tilføj kommentar</button>
+        </form>
 
-                </div>
-            </div>
+
+        @{
+            for (int i = 0; i < Model.Post.Comments.Count; i++)
+            {
+                <p class="mt-3"><strong>@Model.Username_comments[i]</strong></p>
+                <textarea class="form-control" rows="2" disabled>@Model.Post.Comments[i].Content</textarea>
+
+                if(Model.Post.Comments[i].UserID == Model.CurrentUser.Id || Model.Post.UserID == Model.CurrentUser.Id)
+                {
+                    <a class="btn btn-outline-danger mt-1" asp-controller="Comment" asp-action="Delete" asp-route-postId="@Model.Post.ID" asp-route-commentId="@Model.Post.Comments[i].ID">Slet kommentar</a>
+                }
+            }
         }
     </div>
 

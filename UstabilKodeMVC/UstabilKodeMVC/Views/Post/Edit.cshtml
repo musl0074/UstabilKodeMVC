@@ -1,0 +1,21 @@
+﻿@model UstabilKodeMVC.Models.Post
+
+
+    <form asp-controller="Post" asp-action="Edit" method="post">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Titel</span>
+            </div>
+            <input type="text" class="form-control" name="title" value="@Model.Title" />
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text">Indhold</span></div>
+            <textarea class="form-control" rows="10" name="content">@Model.Content</textarea>
+        </div>
+        <input type="hidden" name="id" value="@Model.ID" />
+        @Html.HiddenFor((post) => post.RowVersion, new { Value = Model.RowVersion })
+        <button type="submit" class="btn btn-primary mt-2">Gem ændringer</button>
+    </form>
+
+
+
