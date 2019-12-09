@@ -58,18 +58,9 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return response;
         }
 
-        public async static Task<HttpResponseMessage> UpdateProduct(int id,string name,string details,double price, byte[] rowVersion)
+        public async static Task<HttpResponseMessage> UpdateProduct(Product product)
         {
             string postUpdateProductUrl = APISettings.APIUrl + "/Product/Edit";
-
-            Product product = new Product()
-            {
-                ID = id,
-                Name = name,
-                Details = details,
-                Price = price,
-                RowVersion = rowVersion
-            };
 
             string json = JsonConvert.SerializeObject(product);
             StringContent message = new StringContent(json, Encoding.UTF8, "application/json");

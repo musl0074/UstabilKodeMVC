@@ -1,0 +1,45 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+
+<h1 class="text-center mt-5 mb-5">Bruger administration</h1>
+
+<div class="row">
+    <div class="col-2">
+        <strong>ID</strong>
+    </div>
+    <div class="col-2">
+        <strong>Navn</strong>
+    </div>
+    <div class="col-2">
+        <strong>Email</strong>
+    </div>
+    <div class="col-2">
+        <strong>Telefonnummer</strong>
+    </div>
+</div>
+
+
+@{
+    foreach (var user in Model)
+    {
+    <div class="row mt-3">
+        <div class="col-2">
+            @user.Id
+        </div>
+        <div class="col-2">
+            @user.UserName
+        </div>
+        <div class="col-2">
+            @user.Email
+        </div>
+        <div class="col-2">
+            @user.PhoneNumber
+        </div>
+        <div class="col-2">
+            <a class="btn btn-outline-primary">Rediger</a>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-outline-danger" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id">Slet</a>
+        </div>
+    </div>
+    }
+}

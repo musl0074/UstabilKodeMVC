@@ -1,0 +1,79 @@
+﻿@model UstabilKodeMVC.Models.ProductViewModels.ProductsUser
+
+@{
+    ViewData["Title"] = "Produkter";
+}
+
+@{
+    if (Model.CurrentUser != null && Model.CurrentUser.Email == "admin@admin.dk")
+    {
+        <h1 class="mb-5 text-center">Produkt administration</h1>
+
+
+        <h4>Produkter</h4>
+        <a class="btn btn-outline-secondary mt-3" asp-controller="Product" asp-action="Create">Opret produkt</a>
+        <div class="row mt-3">
+            <div class="col-2">
+                <strong>ID</strong>
+            </div>
+            <div class="col-2">
+                <strong>Produktnavn</strong>
+            </div>
+            <div class="col-2">
+                <strong>Beskrivelse</strong>
+            </div>
+            <div class="col-2">
+                <strong>Produktpris</strong>
+            </div>
+        </div>
+
+        foreach (var product in Model.Products)
+        {
+            <div class="row mt-3">
+                <div class="col-2">
+                    @product.ID
+                </div>
+                <div class="col-2">
+                    @product.Name
+                </div>
+                <div class="col-2">
+                    @product.Details
+                </div>
+                <div class="col-2">
+                    @product.Price
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Edit" asp-route-id="@product.ID">Rediger</a>
+                </div>
+                <div>
+                    <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@product.ID">Slet</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1 class="text-center mb-5 mt-5">Vores produkter</h1>
+
+        foreach (var product in Model.Products)
+        {
+            <div class="row mt-3">
+                <div class="col-2">
+                    @product.Name
+                </div>
+                <div class="col-6">
+                    @product.Details
+                </div>
+                <div class="col-2">
+                    @product.Price
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-outline-primary" href="#">Køb</a>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+

@@ -10,7 +10,6 @@ namespace UstabilKodeMVC.Data
     {
         public static void Initialize(DatabaseContext context)
         {
-            
         }
     }
 }

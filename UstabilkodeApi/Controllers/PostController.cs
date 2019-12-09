@@ -26,7 +26,7 @@ namespace UstabilkodeApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPost()
         {
-            return await _context.Post.AsNoTracking().ToListAsync();
+            return await _context.Post.AsNoTracking().Include((p) => p.Comments).ToListAsync();
         }
 
         // GET: api/Post/5

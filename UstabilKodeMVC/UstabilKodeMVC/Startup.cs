@@ -40,16 +40,29 @@ namespace UstabilKodeMVC
             services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => {
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
                 options.Password.RequireLowercase = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 5;
-              
             })
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<DatabaseContext>();
+            .AddDefaultUI(UIFramework.Bootstrap4)
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<DatabaseContext>();
+                
+
+            //services.AddDefaultIdentity<IdentityUser>(options => {
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequiredLength = 5;
+              
+            //})
+            //    .AddDefaultUI(UIFramework.Bootstrap4)
+            //    .AddEntityFrameworkStores<DatabaseContext>();
 
             
 
@@ -68,7 +81,8 @@ namespace UstabilKodeMVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                APISettings.APIUrl = "http://localhost:54321/api"; // Use local api in development
+                
+                //APISettings.APIUrl = "http://localhost:54321/api"; // Use local api in development
 
                 app.UseDefaultAdmin(); // Create admin account on development, if it doesnt already exist
             }
