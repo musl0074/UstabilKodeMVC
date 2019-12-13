@@ -1,4 +1,6 @@
-﻿@{
+﻿@model int
+
+@{
     ViewData["Title"] = "Purchase";
 }
 
@@ -26,4 +28,4 @@
         <input type="text" placeholder="CVV" />
     </form>
     
-    <a class="btn btn-info mt-3" >Køb</a>
+    <a class="btn btn-info mt-3" asp-controller="Subscription" asp-action="Create" asp-route-id="@Model">Køb</a>

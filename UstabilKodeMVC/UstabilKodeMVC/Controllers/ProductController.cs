@@ -65,9 +65,9 @@ namespace UstabilKodeMVC.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-        public IActionResult Purchase()
+        public IActionResult Purchase(int id)
         {
-            return View();
+            return View(id);
         }
 
     }

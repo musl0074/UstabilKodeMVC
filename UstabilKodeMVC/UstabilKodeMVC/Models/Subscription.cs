@@ -8,8 +8,10 @@ namespace UstabilKodeMVC.Models
     public class Subscription
     {
         public int ID { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public int ProductID { get; set; }
         public DateTime ExpirationDate { get; set; }
+
+
     }
 }

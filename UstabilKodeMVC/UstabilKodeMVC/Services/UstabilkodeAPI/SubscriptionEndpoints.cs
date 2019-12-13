@@ -13,7 +13,7 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
 {
     public class SubscriptionEndpoints
     {
-        public async static Task<List<Subscription>> GetSubscriptions(int userId)
+        public async static Task<List<Subscription>> GetSubscriptions(string userId)
         {
             string getUrl = APISettings.APIUrl + "/Subscription/" + userId;
 
@@ -39,7 +39,7 @@ namespace UstabilKodeMVC.Services.UstabilkodeAPI
             return subscription;
         }
 
-        public async static Task<HttpResponseMessage> CreateSubscription(int productId, int userId, DateTime expirationDate)
+        public async static Task<HttpResponseMessage> CreateSubscription(int productId, string userId, DateTime expirationDate)
         {
             string postUrl = APISettings.APIUrl + "/Subscription";
 

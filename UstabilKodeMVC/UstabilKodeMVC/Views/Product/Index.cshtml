@@ -68,7 +68,7 @@
                     @product.Price
                 </div>
                 <div class="col-2">
-                    <a class="btn btn-outline-primary"asp-controller="Product" asp-action="Purchase">Køb</a>
+                    <a class="btn btn-outline-primary"asp-controller="Product" asp-action="Purchase" asp-route-id="@product.ID">Køb</a>
                 </div>
             </div>
         }
